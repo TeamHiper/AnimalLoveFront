@@ -4,23 +4,30 @@ import Image from 'next/image';
 
 interface PostCardProps {
     data: {
-        id: number;
-        title: string;
-        date: string;
-        imageUrl: string;
+        postId: number;
         content: string;
-      };
+        user: {
+            email: string;
+            name: string;
+            profileImage: string | null;
+            role: string;
+            userId: number;
+            username: string;
+        };
+        imageUrls: string[];
+    };
 }
 
 const PostCard = ({data}:PostCardProps) => {
-
+    console.log(data);
+    console.log(data.content);
   return (
 <div 
     className='col-span-1 cursor-pointer group'>
         <div className='flex flex-col w-full gap-2'>
             <div className='relative w-full overflow-hidden aspect-square rounded-xl'>
                 <Image 
-                    src={data.imageUrl}
+                    src={data.imageUrls?.[0] || ''}
                     fill
                     sizes='auto'
                     className='object-cover w-full h-full transition group-hover:scale-110'
@@ -33,7 +40,7 @@ const PostCard = ({data}:PostCardProps) => {
             </div>
         
             <div className='text-lg font-semibold'>
-                {data.title}
+                {data.content}
             </div>
 
             <div className='flex flex-row items-center justify-between gap-1'>
