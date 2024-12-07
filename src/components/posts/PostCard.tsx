@@ -18,9 +18,9 @@ interface PostCardProps {
     };
 }
 
+
 const PostCard = ({data}:PostCardProps) => {
-    console.log(data);
-    console.log(data.content);
+    console.log("data in card : "+ data.content);
   return (
 <div 
     className='col-span-1 cursor-pointer group'>

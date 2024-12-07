@@ -64,13 +64,14 @@ const PostUploadPage = () => {
         }
         )
         .then(response => {
-            router.push(`http://localhost:3000`)
+
         })
         .catch((err) => {
             console.log(err);
         })
         .finally(() => {
             setIsLoading(false);
+            window.location.href =`http://localhost:3000`;
         })
     }
 
