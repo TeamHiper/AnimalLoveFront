@@ -14,19 +14,18 @@ type PageNationLinkProps = {
 const PaginationLink = ({page, active, children, disabled}:PageNationLinkProps) => {
 
   const params = useSearchParams();
-  const limit = 2;
-  const skip = page ? (Number(page) - 1) * limit : 0;
+  const size = 5;
   
   let currentQuery = {};
 
   if(params){
-    const currentQuery = qs.parse(params?.toString());
+    currentQuery = qs.parse(params?.toString());
   }
 
   const updatedQuery = {
     ...currentQuery,
     page,
-    skip
+    size
   }
 
   return (

@@ -1,17 +1,27 @@
 'use client'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Link from 'next/link'
 import NavItem from './NavItem';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 
-interface NavBarProps {
-    currentUser?: | null;
-}
-
-const Navbar = ({currentUser}: NavBarProps) => {
+const Navbar = () => {
 
 const [menu, setMenu] = useState(false);
+const [currentUser, setCurrentUser] = useState(null); // 사용자 상태
 
+useEffect(() => {
+  // 비동기 작업을 위한 함수 선언
+  const fetchUser = async () => {
+    const accessToken: string | null = sessionStorage.getItem("accessToken"); // 세션 스토리지에서 토큰 가져오기
+    if (accessToken) {
+      const user = await getCurrentUser({accessToken}); // 서버 함수 호출
+      setCurrentUser(user?.data); // 사용자 상태 업데이트
+    }
+  };
+
+  fetchUser(); // 비동기 함수 호출
+}, []);
 const handleMenu = () => {
     setMenu(!menu);
 }

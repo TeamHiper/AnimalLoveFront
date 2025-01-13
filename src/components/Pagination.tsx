@@ -7,19 +7,19 @@ import PaginationLink from './PaginationLink';
 interface PaginationProps {
   page : number;
   totalItems: number
-  perPage: number
+  size: number
 }
 
-const Pagination = ({page, totalItems, perPage}: PaginationProps) => {
+const Pagination = ({page, totalItems, size}: PaginationProps) => {
 
   const {fromItem, toItem, getPageItem, totalPages} = usePagination({
     totalItems: totalItems,
     page: page,
-    itemsPerPage: perPage,
-    maxPageItems: 3
+    itemsPerPage: size,
+    maxPageItems: 10
   })
 
-  const firstPage = 1;
+  const firstPage = 0;
   const nextPage = Math.min(page + 1, totalPages);
   const prevPage = Math.max(page -1, firstPage);
 

@@ -1,15 +1,18 @@
-import useFavorite from '@/hooks/useFavorite';
+"use client"
+import useFavorite, { LikesParams } from '@/hooks/useFavorite';
 
 import React from 'react'
 import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
 
-const HeartButton = () => {
+
+const HeartButton = ({userId,postId}: LikesParams) => {
   
-    //const {hasFavorite, toggleFavorite } = useFavorite();
+    const { isFavorite,toggleFavorite } = useFavorite({userId,postId});
+    console.log("isFavorite : " + isFavorite)
 
     return (
     <div 
-   // onClick={toggleFavorite}
+    onClick={toggleFavorite}
     className='relative transition cursor-pointer hover:opacity-80'>
         <AiOutlineHeart
         size={28}
@@ -19,7 +22,7 @@ const HeartButton = () => {
         />
         <AiFillHeart
         size={24}
-        className={true ? 'fill-rose-500': 'fill-neutral-500/70'}
+        className={isFavorite ? 'fill-rose-500': 'fill-neutral-500/70'}
         />
     </div>
   )

@@ -20,7 +20,6 @@ interface PostCardProps {
 
 
 const PostCard = ({data}:PostCardProps) => {
-    console.log("data in card : "+ data.content);
   return (
 <div 
     className='col-span-1 cursor-pointer group'>
@@ -35,6 +34,8 @@ const PostCard = ({data}:PostCardProps) => {
                 />
                 <div className='absolute top-3 right-3'>
                 <HeartButton
+                    userId={data.user.userId}
+                    postId={data.postId}
                     />
                 </div>
             </div>

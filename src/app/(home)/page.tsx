@@ -6,18 +6,22 @@ import FloatingButton from "@/components/FloatingButton";
 import PostCard from "@/components/posts/PostCard";
 import Image from "next/image";
 import React, {useState,useEffect} from 'react';
-import getPostList from "../actions/getPosts";
+import getPostList, { PostsParams } from "../actions/getPosts";
 import EmptyState from "@/components/EmptyState";
+import Pagination from "@/components/Pagination";
 
-export default async function Home() {
+interface HomeProps{
+  searchParams: PostsParams
+}
 
-        const queryParams = {
-          page : 0,
-          size : 10
-      }
-        const posts = await getPostList(queryParams);
-   
-        posts?.data.map((post:any) => console.log(post.postId));
+export default async function Home({searchParams}: HomeProps) {
+
+      const page = searchParams?.page;
+      const pageNum = typeof page === 'string' ? Number(page): 1;
+      
+      console.log('searchParams.page : '+searchParams.page);
+        const posts = await getPostList(searchParams);
+        console.log("posts?.totalPage : "+posts?.totalPage);
 
     interface PostCardProps {
       data: {
@@ -45,7 +49,7 @@ export default async function Home() {
       :
       <>
         <div className='grid grid-cols-1 gap-8 pt-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-          {posts?.data.map((post:any) =>(  
+          {posts?.data?.map((post:any) =>(  
            <PostCard
              key={post.postId}
              data={post}
@@ -54,10 +58,11 @@ export default async function Home() {
         </div>
       </>
       }
-
-      <FloatingButton
-        href="/posts/upload"
-      >+</FloatingButton>
+      <Pagination
+        page={pageNum} totalItems={Number(posts?.totalPage)} size={5}
+      >
+      </Pagination>
+      
     </Container>
   );
 }
