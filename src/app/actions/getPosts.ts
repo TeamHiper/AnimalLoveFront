@@ -16,11 +16,11 @@ export default async function getPostList(params:PostsParams) {
 
         const response = await axios.get('http://localhost:8080/api/v1/post/list', { params: params });
 
-        //const totalPage = await axios.get('http://localhost:8080/api/v1/post/list');
-        
+        const totalPage = await axios.get('http://localhost:8080/api/v1/post/list/count');
+
         return {
             data: response.data,
-            totalPage : 11
+            totalPage : totalPage.data
         }
 
     } catch (error) {

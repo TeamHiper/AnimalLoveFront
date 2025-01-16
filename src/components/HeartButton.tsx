@@ -5,9 +5,9 @@ import React from 'react'
 import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
 
 
-const HeartButton = ({userId,postId}: LikesParams) => {
+const HeartButton = ({currentUser,postId}: LikesParams) => {
   
-    const { isFavorite,toggleFavorite } = useFavorite({userId,postId});
+    const { isFavorite,toggleFavorite } = useFavorite({currentUser,postId});
     console.log("isFavorite : " + isFavorite)
 
     return (
