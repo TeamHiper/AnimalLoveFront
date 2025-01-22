@@ -8,7 +8,7 @@ const Container = ({children} : ContainerProps) => {
   return (
     <div
         className='
-        max-w-[1200px]
+        max-w-[1500px]
         mx-auto
         xl:px-20
         md:px-10

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import HeartButton from '../HeartButton';
 import Image from 'next/image';
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import { useRouter } from 'next/navigation';
 
 interface PostCardProps {
     data: {
@@ -35,9 +36,18 @@ useEffect(() => {
   };
   fetchUser(); // 비동기 함수 호출
 }, []);
+
+const router = useRouter();
+
+const handleCardClick = () => {
+  // postId를 포함한 URL로 이동
+  router.push(`/posts/${data.postId}`);
+};
+
 return (
 <div 
-    className='col-span-1 cursor-pointer group'>
+    className='col-span-1 cursor-pointer group'
+    onClick={handleCardClick}>
         <div className='flex flex-col w-full gap-2'>
             <div className='relative w-full overflow-hidden aspect-square rounded-xl'>
                 <Image 
@@ -45,7 +55,7 @@ return (
                     fill
                     sizes='auto'
                     className='object-cover w-full h-full transition group-hover:scale-110'
-                    alt="product"
+                    alt="post"
                 />
                 {currentUser?
                     <div className='absolute top-3 right-3'>

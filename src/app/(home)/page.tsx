@@ -23,21 +23,6 @@ export default async function Home({searchParams}: HomeProps) {
         const posts = await getPostList(searchParams);
         console.log("posts?.totalPage : "+posts?.totalPage);
 
-    interface PostCardProps {
-      data: {
-          postId: number;
-          content: string;
-          user: {
-              email: string;
-              name: string;
-              profileImage: string | null;
-              role: string;
-              userId: number;
-              username: string;
-          };
-          imageUrls: string[];
-      };
-  }
   return (
     <Container>
 
