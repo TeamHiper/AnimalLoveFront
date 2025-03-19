@@ -12,7 +12,7 @@ export default async function getCurrentUser(params:UserParams) {
           return null;
         }
 
-        const response = await axios.get('http://localhost:8080/api/v1/user/getUser',
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/getUser`,
           { params: params,
             headers: {
                 Authorization: `${accessToken}`

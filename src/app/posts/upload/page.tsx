@@ -1,4 +1,5 @@
 'use client'
+import getCurrentUser from '@/app/actions/getCurrentUser';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import Heading from '@/components/Heading';
@@ -21,6 +22,20 @@ const PostUploadPage = () => {
     // 이미지 URL과 publicId를 저장할 상태 추가
     const [imageUrl, setImageUrl] = useState<string>('');
     const [publicId, setPublicId] = useState<string>('');
+    const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const accessToken = sessionStorage.getItem("accessToken"); // 세션 스토리지에서 토큰 가져오기
+      if (accessToken) {
+        const user = await getCurrentUser({ accessToken }); // 서버 함수 호출
+        setCurrentUser(user?.data); // 사용자 상태 업데이트
+      }
+
+    };
+
+    fetchUser();
+  }, []);
 
     // 하위 컴포넌트에서 완료된 데이터를 전달받는 함수
     const handleUploadComplete = async (data: { url: string; publicId: string }) => {
@@ -37,7 +52,7 @@ const PostUploadPage = () => {
         defaultValues: {
             content: '',
             imageSrc: '',
-            userId:''
+            email:''
         }
     })
 
@@ -46,17 +61,16 @@ const PostUploadPage = () => {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
 
-        // 두 개의 DTO 구조에 맞는 데이터 준비
         const requestData = {
             ...data, // postDto 해당하는 데이터
 
         };
 
-        axios.post(`http://localhost:8080/api/v1/post/register`, requestData, {
+        axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/post/register`, requestData, {
             params: {
                 url: imageUrl,
                 publicId: publicId,
-                userId: 1
+                email: currentUser.email
             },
             headers: {
                 'Content-Type': 'application/json',
@@ -71,7 +85,7 @@ const PostUploadPage = () => {
         })
         .finally(() => {
             setIsLoading(false);
-            window.location.href =`http://localhost:3000`;
+            window.location.href =`${process.env.NEXT_PUBLIC_SITE_URL}`;
         })
     }
 

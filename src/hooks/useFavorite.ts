@@ -9,7 +9,7 @@ export interface LikesParams{
     currentUser: {
         username: string,
         email : string,
-        profileImage: string |null,
+        profileImageUrl: string |null,
         role: string,
         name: string
     };
@@ -29,7 +29,7 @@ const useFavorite = (params:LikesParams) => {
     useEffect(() => {
         const fetchFavoriteStatus = async () => {
             try {
-                const response = await axios.post('http://localhost:8080/api/v1/like/check',formData ,
+                const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/like/check`,formData ,
                     {
                      headers: {
                          'Content-Type': 'application/x-www-form-urlencoded',

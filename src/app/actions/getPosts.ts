@@ -14,9 +14,9 @@ export default async function getPostList(params:PostsParams) {
             
         }
 
-        const response = await axios.get('http://localhost:8080/api/v1/post/list', { params: params });
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/post/list`, { params: params });
 
-        const totalPage = await axios.get('http://localhost:8080/api/v1/post/list/count');
+        const totalPage = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/post/list/count`);
 
         return {
             data: response.data,

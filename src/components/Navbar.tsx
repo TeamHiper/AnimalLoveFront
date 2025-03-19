@@ -8,7 +8,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 const Navbar = () => {
 
 const [menu, setMenu] = useState(false);
-const [currentUser, setCurrentUser] = useState(null); // 사용자 상태
+const [currentUser, setCurrentUser] = useState<any>(); // 사용자 상태
 
 useEffect(() => {
   // 비동기 작업을 위한 함수 선언

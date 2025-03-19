@@ -7,12 +7,13 @@ import axios from 'axios';
 import HeartButton from '../HeartButton';
 import { FaExpandAlt } from "react-icons/fa";
 import Modal from '../Modal';
+import CommentSection from '../Comment';
 
 export interface DetailPostProps {
   currentUser: {
     username: string,
     email: string,
-    profileImage: string | null,
+    profileImageUrl: string | null,
     role: string,
     name: string
   }| null;
@@ -24,7 +25,7 @@ export interface DetailPostProps {
     user: {
       email: string;
       name: string;
-      profileImage: string | null;
+      profileImageUrl: string | null;
     }
 
   }
@@ -47,7 +48,7 @@ const DetailPost = ({ currentUser, data }: DetailPostProps) => {
     const fetchLikeCount = async () => {
       try {
         const postId = data.postId;
-        const response = await axios.get(`http://localhost:8080/api/v1/like/count`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/like/count`, {
           params: { postId }, // postId를 서버로 전달
         });
         setLikeCount(response.data); // 서버에서 받은 좋아요 수 설정
@@ -134,7 +135,7 @@ const DetailPost = ({ currentUser, data }: DetailPostProps) => {
         </div>
 
         {/* 오른쪽: Content, 작성자 정보, 댓글 */}
-        <div className="w-full lg:w-1/3 flex flex-col gap-6 p-0">
+        <div className="w-full lg:w-2/3 flex flex-col gap-6 p-0">
           {/*closeupActionBar */}
           <div className="relative top-0 left-0 w-full bg-white shadow-md px-4 py-4 flex justify-between items-center">
             {/* 좌측: 뒤로 가기 버튼 */}
@@ -172,24 +173,20 @@ const DetailPost = ({ currentUser, data }: DetailPostProps) => {
           {/* 작성자 정보 */}
           <div className="flex items-center gap-4 ml-5">
             <Image
-              src={data.user.profileImage || ''}
+              src={data.user.profileImageUrl || ''}
               alt={data.user.name}
-              className="w-12 h-12 rounded-full object-cover"
+              width={40}
+              height={40}
+              className="rounded-full object-cover"
             />
             <p className="text-lg font-semibold">{data.user.name}</p>
 
           </div>
           {/* 댓글 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4 ml-5">댓글</h2>
-            <ul className="space-y-4">
-              {/* {data.comments?.map((comment: any, index: number) => (
-            <li key={index} className="border-b pb-2">
-              <p className="font-semibold">{comment.user.name}</p>
-              <p>{comment.text}</p>
-            </li>
-          ))} */}
-            </ul>
+           <CommentSection
+           postId={data.postId}
+           />
           </div>
         </div>
       </div>
